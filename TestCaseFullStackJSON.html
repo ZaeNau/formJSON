@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JSON</title>
+  <style>
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"], select {
+      display: block;
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin-bottom: 10px;
+    }
+    input[type="submit"], input[type="button"] {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      padding: 10px;
+      cursor: pointer;
+    }
+    input[type="button"] {
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>FrontEnd untuk menampilkan Form JSON</h1>
+  <form id="myForm">
+    <div id="formFields"></div>
+    <input type="submit" value="Submit">
+    <input type="button" value="Cancel" onclick="cancelForm()">
+  </form>
+
+  <script>
+    // Data JSON untuk form
+    const formJson = {
+      "name": {
+        "label": "Name",
+        "type": "text"
+      },
+      "TTL": {
+        "label": "Tempat, Tanggal Lahir",
+        "type": "text"
+      },
+      "asal": {
+        "label": "Domisili",
+        "type": "text"
+      },
+      "pendidikan": {
+        "label": "Pendidikan Terakhir",
+        "type": "text"
+      },
+      "kerja": {
+        "label": "Pekerjaan Saat Ini",
+        "type": "text"
+      },
+      "role": {
+        "label": "Role yang diminati",
+        "type": "text"
+      },
+   
+    };
+
+    // Membuat form berdasarkan data JSON
+    const formFields = document.getElementById("formFields");
+    for (const key in formJson) {
+      const field = formJson[key];
+      const label = document.createElement("label");
+      label.innerHTML = field.label;
+      formFields.appendChild(label);
+      if (field.type === "text") {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.name = key;
+        formFields.appendChild(input);
+      }
+    }
+
+    // Submit form
+    const form = document.getElementById("myForm");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const data = {};
+      for (const [key, value] of formData.entries()) {
+        data[key] = value;
+      }
+      console.log(data); // Ubah ke aksi berikutnya (API, Backend, dll.)
+    });
+
+    // Cancel form
+    function cancelForm() {
+      form.reset();
+    }
+  </script>
+</body>
+</html>
